@@ -1,0 +1,15 @@
+{
+    "jsc": {
+        "parser": {
+          "syntax": "ecmascript",
+          "jsx": false
+        },
+        "loose": false,
+        "externalHelpers": false,
+        "keepClassNames": false
+      },
+      "env": {
+        "mode": "usage",
+        "coreJs": "3.26.1"
+    }
+}

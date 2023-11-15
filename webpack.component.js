@@ -44,7 +44,8 @@ module.exports = {
             test: /\.m?(js|jsx|ts|tsx)$/,
             exclude: /node_modules/,
             use: [{
-                loader: 'babel-loader',
+                // loader: 'babel-loader',
+                loader: 'swc-loader',
             }]
         }
     ]
