@@ -1,6 +1,8 @@
 const path = require('path')
 const { VueLoaderPlugin } = require('vue-loader')
 const TerserPlugin = require('terser-webpack-plugin')
+const { EsbuildPlugin } = require('esbuild-loader')
+
 const glob = require('glob'); //node自带的模块用于遍历
 const list = {};
 async function makeList(dirPath, list) {
@@ -25,13 +27,19 @@ module.exports = {
     ],
     optimization: {
         minimize: true,
-        minimizer: [new TerserPlugin({
-            minify: TerserPlugin.esbuildMinify,
-            terserOptions: { // 指定esbuild的target为es5,注意一定确保babel-loader or swc-loader将代码转换成了es5，不然会报target environment ("es5") is not supported yet这样的错误
-                target: 'es5'
-            }
-            // minify: TerserPlugin.terserMinify
-        })],
+        minimizer: [
+            // new TerserPlugin({
+            //     minify: TerserPlugin.esbuildMinify,
+            //     terserOptions: { // 指定esbuild的target为es5,注意一定确保babel-loader or swc-loader将代码转换成了es5，不然会报target environment ("es5") is not supported yet这样的错误
+            //         target: 'es5'
+            //     }
+            //     // minify: TerserPlugin.terserMinify
+            // })
+            new EsbuildPlugin({
+                globalName: 'mui', // 设置全局变量，避免无法通过window.xxx访问
+                target: 'es5'  // Syntax to transpile to (see options below for possible values)
+            })
+        ],
     },
     module: {
         rules: [{
